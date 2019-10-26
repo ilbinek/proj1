@@ -11,9 +11,11 @@ const char *NOT_FOUND = "Not found";
 void printAll();
 void checkArgument(char *arg);
 
-bool containsNumber(char str[99], char *nbr);
+bool containsNumber(char str[MAX_LENGTH], char *nbr);
 
-bool containsName(char str[99], char *nbr);
+bool containsName(char str[MAX_LENGTH], char *nbr);
+
+bool isItThere(char str[MAX_LENGTH], char c, int *pos);
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {
@@ -29,7 +31,6 @@ int main(int argc, char *argv[]) {
                 found = true;
             }
         }
-
         // Print something if nothing was found
         if (!found) {
             printf("%s", NOT_FOUND);
@@ -40,14 +41,95 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-bool containsName(char str[99], char *nbr) {
-    // Creating returning variable
-    
-    bool ret = false;
-    return 0;
+bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
+    for (int i = *pos; i < (int)strlen(str); i++) {
+        switch (c) {
+            case '2':
+                if (str[i] == 'a' || str[i] == 'A' || str[i] == 'b' || str[i] == 'B' || str[i] == 'c' || str[i] == 'C') {
+                *pos = i + 1;
+                    return true;
+                }
+                break;
+
+            case '3':
+                if (str[i] == 'd' || str[i] == 'D' || str[i] == 'e' || str[i] == 'E' || str[i] == 'f' || str[i] == 'F') {
+                    *pos = i + 1;
+                    return true;
+                }
+                break;
+
+            case '4':
+                if (str[i] == 'g' || str[i] == 'G' || str[i] == 'h' || str[i] == 'H' || str[i] == 'i' || str[i] == 'I') {
+                    *pos = i + 1;
+                    return true;
+                }
+                break;
+
+            case '5':
+                if (str[i] == 'j' || str[i] == 'J' || str[i] == 'k' || str[i] == 'K' || str[i] == 'l' || str[i] == 'L') {
+                    *pos = i + 1;
+                    return true;
+                }
+                break;
+
+            case '6':
+                if (str[i] == 'm' || str[i] == 'M' || str[i] == 'n' || str[i] == 'N' || str[i] == 'o' || str[i] == 'O') {
+                    *pos = i;
+                    return true;
+                }
+                break;
+
+            case '7':
+                if (str[i] == 'p' || str[i] == 'P' || str[i] == 'q' || str[i] == 'Q' || str[i] == 'r' || str[i] == 'R' || str[i] == 's' || str[i] == 'S') {
+                    *pos = i;
+                    return true;
+                }
+                break;
+
+            case '8':
+                if (str[i] == 't' || str[i] == 'T' || str[i] == 'u' || str[i] == 'U' || str[i] == 'v' || str[i] == 'V') {
+                    *pos = i;
+                    return true;
+                }
+                break;
+
+            case '9':
+                if (str[i] == 'w' || str[i] == 'W' || str[i] == 'x' || str[i] == 'X' || str[i] == 'y' || str[i] == 'Y' || str[i] == 'z' || str[i] == 'Z') {
+                    *pos = i;
+                    return true;
+                }
+                break;
+
+            case '0':
+                if (str[i] == '+') {
+                    *pos = i;
+                    return true;
+                }
+                break;
+
+            default:
+                // Go on
+                break;
+        }
+    }
+    return false;
 }
 
-bool containsNumber(char str[99], char *nbr) {
+bool containsName(char str[MAX_LENGTH], char *nbr) {
+    // Define what position are we starting the search
+    int pos = 0;
+    for (int i = 0; i < (int)strlen(nbr); i++) {
+        // Checks if there's a char after our previous
+        if (!isItThere(str, nbr[i], &pos)) {
+            // If not, returns false
+            return false;
+        }
+    }
+    // Otherwise returns true
+    return true;
+}
+
+bool containsNumber(char str[MAX_LENGTH], char *nbr) {
     // Does it contain exact match
     bool ret = strstr(str, nbr);
     return ret;
@@ -55,14 +137,13 @@ bool containsNumber(char str[99], char *nbr) {
 
 void checkArgument(char *arg) {
     // Check if argument is only numbers
-    for (int i = 0; i < strlen(arg); i++) {
+    for (int i = 0; i < (int)strlen(arg); i++) {
         // If not, print error and exit
-        if ((arg[i] >= '0' && arg[i] <= '9')) {
+        if (!(arg[i] >= '0' && arg[i] <= '9' && arg[i] != '1')) {
             fputs(ERROR_INVALID_ARGUMENT, stderr);
             exit(-1);
         }
     }
-    return;
 }
 
 void printAll() {
@@ -71,5 +152,4 @@ void printAll() {
     while (fgets(str, MAX_LENGTH, stdin) != NULL) {
         printf("%s", str);
     }
-    return;
 }
