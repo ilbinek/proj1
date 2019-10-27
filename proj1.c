@@ -23,11 +23,12 @@ int main(int argc, char *argv[]) {
     } else if (argc == 2) {
         checkArgument(argv[1]);
         bool found = false;
-        char str[MAX_LENGTH];
-        while (fgets(str, MAX_LENGTH, stdin) != NULL) {
+        char name[MAX_LENGTH];
+        char nbr[MAX_LENGTH];
+        while (fgets(name, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
             // Check if we should print this contact
-            if (containsNumber(str, argv[1]) || containsName(str, argv[1])) {
-                printf("%s", str);
+            if (containsNumber(nbr, argv[1]) || containsName(name, argv[1])) {
+                printf("%s, %s", name, nbr);
                 found = true;
             }
         }
@@ -44,6 +45,9 @@ int main(int argc, char *argv[]) {
 bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
     for (int i = *pos; i < (int)strlen(str); i++) {
         switch (c) {
+            case '1':
+                return false;
+                
             case '2':
                 if (str[i] == 'a' || str[i] == 'A' || str[i] == 'b' || str[i] == 'B' || str[i] == 'c' || str[i] == 'C') {
                 *pos = i + 1;
@@ -139,7 +143,7 @@ void checkArgument(char *arg) {
     // Check if argument is only numbers
     for (int i = 0; i < (int)strlen(arg); i++) {
         // If not, print error and exit
-        if (!(arg[i] >= '0' && arg[i] <= '9' && arg[i] != '1')) {
+        if (!(arg[i] >= '0' && arg[i] <= '9')) {
             fputs(ERROR_INVALID_ARGUMENT, stderr);
             exit(-1);
         }
@@ -148,8 +152,9 @@ void checkArgument(char *arg) {
 
 void printAll() {
     char str[MAX_LENGTH];
+    char nbr[MAX_LENGTH];
     // Loops through stdin and prints all lines
-    while (fgets(str, MAX_LENGTH, stdin) != NULL) {
-        printf("%s", str);
+    while (fgets(str, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
+        printf("%s, %s", str, nbr   );
     }
 }
