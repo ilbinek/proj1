@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-const int MAX_LENGTH = 99;
+const int MAX_LENGTH = 101;
 const char *ERROR_INVALID_ARGUMENT = "INVALID ARGUMENT";
 const char *ERROR_UNKNOWN_ARGUMENTS = "UNKNOWN ARGUMENTS";
 const char *NOT_FOUND = "Not found";
