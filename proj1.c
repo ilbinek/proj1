@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         while (fgets(name, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
             // Check if we should print this contact
             if (containsNumber(nbr, argv[1]) || containsName(name, argv[1])) {
-                printf("%s, %s", name, nbr);
+                printf("%.*s, %s", (int)strlen(name) - 1, name, nbr);
                 found = true;
             }
         }
@@ -47,7 +47,7 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
         switch (c) {
             case '1':
                 return false;
-                
+
             case '2':
                 if (str[i] == 'a' || str[i] == 'A' || str[i] == 'b' || str[i] == 'B' || str[i] == 'c' || str[i] == 'C') {
                 *pos = i + 1;
@@ -155,6 +155,6 @@ void printAll() {
     char nbr[MAX_LENGTH];
     // Loops through stdin and prints all lines
     while (fgets(str, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
-        printf("%s, %s", str, nbr   );
+        printf("%.*s, %s", (int)strlen(str) - 1, str, nbr);
     }
 }
