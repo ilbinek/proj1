@@ -3,17 +3,14 @@
 #include <string.h>
 #include <stdbool.h>
 
-const int MAX_LENGTH = 101;
-const char *ERROR_INVALID_ARGUMENT = "INVALID ARGUMENT";
-const char *ERROR_UNKNOWN_ARGUMENTS = "UNKNOWN ARGUMENTS";
-const char *NOT_FOUND = "Not found";
+#define MAX_LENGTH 101
 
 void printAll();
 void checkArgument(char *arg);
 
 bool containsNumber(char str[MAX_LENGTH], char *nbr);
 
-bool containsName(char str[MAX_LENGTH], char *nbr);
+bool containsName(char *str, char *nbr);
 
 bool isItThere(char str[MAX_LENGTH], char c, int *pos);
 
@@ -25,25 +22,31 @@ int main(int argc, char *argv[]) {
         bool found = false;
         char name[MAX_LENGTH];
         char nbr[MAX_LENGTH];
-        while (fgets(name, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
-            // Check if we should print this contact
-            if (containsNumber(nbr, argv[1]) || containsName(name, argv[1])) {
-                printf("%.*s, %s", (int)strlen(name) - 1, name, nbr);
-                found = true;
+        while (fgets(name, MAX_LENGTH, stdin) != NULL) {
+            if (fgets(nbr, MAX_LENGTH, stdin) != NULL) {
+                // Check if we should print this contact
+                if (containsNumber(nbr, argv[1]) || containsName(name, argv[1])) {
+                    printf("%.*s, %s", (int)strlen(name) - 1, name, nbr);
+                    found = true;
+                }
+            } else {
+                printf("%s", "NO NUMBER FOUND");
             }
         }
         // Print something if nothing was found
         if (!found) {
-            printf("%s", NOT_FOUND);
+            printf("%s", "Not found");
         }
     } else {
-        fputs(ERROR_UNKNOWN_ARGUMENTS, stderr);
+        fputs("UNKNOWN ARGUMENTS", stderr);
     }
+    printf("\n");
     return 0;
 }
 
 bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
-    for (int i = *pos; i < (int)strlen(str); i++) {
+    int size = (int)strlen(str);
+    for (int i = *pos; i < size; i++) {
         switch (c) {
             case '1':
                 return false;
@@ -122,7 +125,8 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 bool containsName(char str[MAX_LENGTH], char *nbr) {
     // Define what position are we starting the search
     int pos = 0;
-    for (int i = 0; i < (int)strlen(nbr); i++) {
+    int size = (int)strlen(nbr);
+    for (int i = 0; i < size; i++) {
         // Checks if there's a char after our previous
         if (!isItThere(str, nbr[i], &pos)) {
             // If not, returns false
@@ -133,18 +137,18 @@ bool containsName(char str[MAX_LENGTH], char *nbr) {
     return true;
 }
 
-bool containsNumber(char str[MAX_LENGTH], char *nbr) {
+bool containsNumber(char *str, char *nbr) {
     // Does it contain exact match
-    bool ret = strstr(str, nbr);
-    return ret;
+    return strstr(str, nbr) != NULL;
 }
 
 void checkArgument(char *arg) {
     // Check if argument is only numbers
-    for (int i = 0; i < (int)strlen(arg); i++) {
+    int size = (int)strlen(arg);
+    for (int i = 0; i < size; i++) {
         // If not, print error and exit
         if (!(arg[i] >= '0' && arg[i] <= '9')) {
-            fputs(ERROR_INVALID_ARGUMENT, stderr);
+            fputs("INVALID ARGUMENT", stderr);
             exit(-1);
         }
     }
@@ -157,4 +161,5 @@ void printAll() {
     while (fgets(str, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
         printf("%.*s, %s", (int)strlen(str) - 1, str, nbr);
     }
+    printf("\n");
 }
