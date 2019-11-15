@@ -8,11 +8,13 @@
 void printAll();    // Prints everything that get's into stdin
 void checkArgument(char *arg);  // Check if arguments that was provided isn't in unsupported format
 
-bool containsNumber(char str[MAX_LENGTH], char *nbr);   // Checks if the number that was provided is in the contact's number
+bool
+containsNumber(char str[MAX_LENGTH], char *nbr);   // Checks if the number that was provided is in the contact's number
 
 bool containsName(char *str, char *nbr);    // Checks if the number provided is in the contact's name
 
-bool isItThere(char str[MAX_LENGTH], char c, int *pos); // Checks if desired character that corresponds to number is in the next part of string provided
+bool isItThere(char str[MAX_LENGTH], char c,
+               int *pos); // Checks if desired character that corresponds to number is in the next part of string provided
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {
@@ -32,7 +34,7 @@ int main(int argc, char *argv[]) {
                 // Check if we should print this contact
                 if (containsNumber(nbr, argv[1]) || containsName(name, argv[1])) {
                     // Print contact with desired formatting
-                    printf("%.*s, %s", (int)strlen(name) - 1, name, nbr);
+                    printf("%.*s, %s", (int) strlen(name) - 1, name, nbr);
                     found = true;
                 }
             } else {
@@ -55,7 +57,7 @@ int main(int argc, char *argv[]) {
 
 // Checks if desired character that corresponds to number is in the next part of string provided
 bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
-    int size = (int)strlen(str);
+    int size = (int) strlen(str);
     // Check for all characters that are left
     for (int i = *pos; i < size; i++) {
         /* Check if current character corresponds to desired number
@@ -67,56 +69,64 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
                 return false;
 
             case '2':
-                if (str[i] == 'a' || str[i] == 'A' || str[i] == 'b' || str[i] == 'B' || str[i] == 'c' || str[i] == 'C') {
-                *pos = i + 1;
+                if (str[i] == 'a' || str[i] == 'A' || str[i] == 'b' || str[i] == 'B' || str[i] == 'c' ||
+                    str[i] == 'C') {
+                    *pos = i + 1;
                     return true;
                 }
                 break;
 
             case '3':
-                if (str[i] == 'd' || str[i] == 'D' || str[i] == 'e' || str[i] == 'E' || str[i] == 'f' || str[i] == 'F') {
+                if (str[i] == 'd' || str[i] == 'D' || str[i] == 'e' || str[i] == 'E' || str[i] == 'f' ||
+                    str[i] == 'F') {
                     *pos = i + 1;
                     return true;
                 }
                 break;
 
             case '4':
-                if (str[i] == 'g' || str[i] == 'G' || str[i] == 'h' || str[i] == 'H' || str[i] == 'i' || str[i] == 'I') {
+                if (str[i] == 'g' || str[i] == 'G' || str[i] == 'h' || str[i] == 'H' || str[i] == 'i' ||
+                    str[i] == 'I') {
                     *pos = i + 1;
                     return true;
                 }
                 break;
 
             case '5':
-                if (str[i] == 'j' || str[i] == 'J' || str[i] == 'k' || str[i] == 'K' || str[i] == 'l' || str[i] == 'L') {
+                if (str[i] == 'j' || str[i] == 'J' || str[i] == 'k' || str[i] == 'K' || str[i] == 'l' ||
+                    str[i] == 'L') {
                     *pos = i + 1;
                     return true;
                 }
                 break;
 
             case '6':
-                if (str[i] == 'm' || str[i] == 'M' || str[i] == 'n' || str[i] == 'N' || str[i] == 'o' || str[i] == 'O') {
+                if (str[i] == 'm' || str[i] == 'M' || str[i] == 'n' || str[i] == 'N' || str[i] == 'o' ||
+                    str[i] == 'O') {
                     *pos = i;
                     return true;
                 }
                 break;
 
             case '7':
-                if (str[i] == 'p' || str[i] == 'P' || str[i] == 'q' || str[i] == 'Q' || str[i] == 'r' || str[i] == 'R' || str[i] == 's' || str[i] == 'S') {
+                if (str[i] == 'p' || str[i] == 'P' || str[i] == 'q' || str[i] == 'Q' || str[i] == 'r' ||
+                    str[i] == 'R' || str[i] == 's' || str[i] == 'S') {
                     *pos = i;
                     return true;
                 }
                 break;
 
             case '8':
-                if (str[i] == 't' || str[i] == 'T' || str[i] == 'u' || str[i] == 'U' || str[i] == 'v' || str[i] == 'V') {
+                if (str[i] == 't' || str[i] == 'T' || str[i] == 'u' || str[i] == 'U' || str[i] == 'v' ||
+                    str[i] == 'V') {
                     *pos = i;
                     return true;
                 }
                 break;
 
             case '9':
-                if (str[i] == 'w' || str[i] == 'W' || str[i] == 'x' || str[i] == 'X' || str[i] == 'y' || str[i] == 'Y' || str[i] == 'z' || str[i] == 'Z') {
+                if (str[i] == 'w' || str[i] == 'W' || str[i] == 'x' || str[i] == 'X' || str[i] == 'y' ||
+                    str[i] == 'Y' || str[i] == 'z' || str[i] == 'Z') {
                     *pos = i;
                     return true;
                 }
@@ -141,7 +151,7 @@ bool containsName(char str[MAX_LENGTH], char *nbr) {
     // Define what position are we starting the search
     int pos = 0;
     // Get size of our string
-    int size = (int)strlen(nbr);
+    int size = (int) strlen(nbr);
     // Iterate through string
     for (int i = 0; i < size; i++) {
         // Checks if there's a char after our previous
@@ -161,7 +171,7 @@ bool containsNumber(char *str, char *nbr) {
 
 void checkArgument(char *arg) {
     // Check if argument is only numbers
-    int size = (int)strlen(arg);
+    int size = (int) strlen(arg);
     for (int i = 0; i < size; i++) {
         // If not, print error and exit
         if (!(arg[i] >= '0' && arg[i] <= '9')) {
@@ -177,7 +187,7 @@ void printAll() {
     char nbr[MAX_LENGTH];
     // Loops through stdin and prints all lines
     while (fgets(str, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
-        printf("%.*s, %s", (int)strlen(str) - 1, str, nbr);
+        printf("%.*s, %s", (int) strlen(str) - 1, str, nbr);
     }
     printf("\n");
 }
