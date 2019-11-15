@@ -3,24 +3,26 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX_LENGTH 101
+#define MAX_LENGTH 102  // Maximum length of characters, that program can handle
 
-void printAll();
-void checkArgument(char *arg);
+void printAll();    // Prints everything that get's into stdin
+void checkArgument(char *arg);  // Check if arguments that was provided isn't in unsupported format
 
-bool containsNumber(char str[MAX_LENGTH], char *nbr);
+bool containsNumber(char str[MAX_LENGTH], char *nbr);   // Checks if the number that was provided is in the contact's number
 
-bool containsName(char *str, char *nbr);
+bool containsName(char *str, char *nbr);    // Checks if the number provided is in the contact's name
 
-bool isItThere(char str[MAX_LENGTH], char c, int *pos);
+bool isItThere(char str[MAX_LENGTH], char c, int *pos); // Checks if desired character that corresponds to number is in the next part of string provided
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {
         // If no arguments submitted, prints all
         printAll();
     } else if (argc == 2) {
+        // Check argument
         checkArgument(argv[1]);
         bool found = false;
+        // Defines two strings that will hold name and number of desired contact
         char name[MAX_LENGTH];
         char nbr[MAX_LENGTH];
         // Check for all names
@@ -29,10 +31,12 @@ int main(int argc, char *argv[]) {
             if (fgets(nbr, MAX_LENGTH, stdin) != NULL) {
                 // Check if we should print this contact
                 if (containsNumber(nbr, argv[1]) || containsName(name, argv[1])) {
+                    // Print contact with desired formatting
                     printf("%.*s, %s", (int)strlen(name) - 1, name, nbr);
                     found = true;
                 }
             } else {
+                // Print a message when no number was found
                 printf("%s", "NO NUMBER FOUND");
             }
         }
@@ -42,18 +46,22 @@ int main(int argc, char *argv[]) {
             printf("%s", "Not found");
         }
     } else {
+        // Prints error when we have more arguments
         fputs("UNKNOWN ARGUMENTS\n", stderr);
     }
     printf("\n");
     return 0;
 }
 
-// finds out if the number is in the next part of the contact
+// Checks if desired character that corresponds to number is in the next part of string provided
 bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
     int size = (int)strlen(str);
-    // Check for all chars that are left
+    // Check for all characters that are left
     for (int i = *pos; i < size; i++) {
-        // Check if
+        /* Check if current character corresponds to desired number
+         * If so, set value of position to the next character
+         * and return true, that a character was found
+        */
         switch (c) {
             case '1':
                 return false;
@@ -132,7 +140,9 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 bool containsName(char str[MAX_LENGTH], char *nbr) {
     // Define what position are we starting the search
     int pos = 0;
+    // Get size of our string
     int size = (int)strlen(nbr);
+    // Iterate through string
     for (int i = 0; i < size; i++) {
         // Checks if there's a char after our previous
         if (!isItThere(str, nbr[i], &pos)) {
