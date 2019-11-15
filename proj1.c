@@ -16,13 +16,16 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos);
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {
+        // If no arguments submitted, prints all
         printAll();
     } else if (argc == 2) {
         checkArgument(argv[1]);
         bool found = false;
         char name[MAX_LENGTH];
         char nbr[MAX_LENGTH];
+        // Check for all names
         while (fgets(name, MAX_LENGTH, stdin) != NULL) {
+            // Checks for all numbers
             if (fgets(nbr, MAX_LENGTH, stdin) != NULL) {
                 // Check if we should print this contact
                 if (containsNumber(nbr, argv[1]) || containsName(name, argv[1])) {
@@ -35,18 +38,22 @@ int main(int argc, char *argv[]) {
         }
         // Print something if nothing was found
         if (!found) {
+            // If no contact found, prints all
             printf("%s", "Not found");
         }
     } else {
-        fputs("UNKNOWN ARGUMENTS", stderr);
+        fputs("UNKNOWN ARGUMENTS\n", stderr);
     }
     printf("\n");
     return 0;
 }
 
+// finds out if the number is in the next part of the contact
 bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
     int size = (int)strlen(str);
+    // Check for all chars that are left
     for (int i = *pos; i < size; i++) {
+        // Check if
         switch (c) {
             case '1':
                 return false;
@@ -148,12 +155,13 @@ void checkArgument(char *arg) {
     for (int i = 0; i < size; i++) {
         // If not, print error and exit
         if (!(arg[i] >= '0' && arg[i] <= '9')) {
-            fputs("INVALID ARGUMENT", stderr);
+            fputs("INVALID ARGUMENT\n", stderr);
             exit(-1);
         }
     }
 }
 
+// Prints all contacts
 void printAll() {
     char str[MAX_LENGTH];
     char nbr[MAX_LENGTH];
