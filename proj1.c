@@ -11,7 +11,7 @@ void checkArgument(char *arg);  // Check if arguments that was provided isn't in
 bool
 containsNumber(char str[MAX_LENGTH], char *nbr);   // Checks if the number that was provided is in the contact's number
 
-bool containsName(char *str, char *nbr);    // Checks if the number provided is in the contact's name
+bool containsName(char str[MAX_LENGTH], char *nbr);    // Checks if the number provided is in the contact's name
 
 bool isItThere(char str[MAX_LENGTH], char c,
                int *pos); // Checks if desired character that corresponds to number is in the next part of string provided
@@ -66,11 +66,15 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
         */
         switch (c) {
             case '1':
-                return false;
+                if (str[i] == '1') {
+                    *pos = i + 1;
+                    return true;
+                }
+                break;
 
             case '2':
                 if (str[i] == 'a' || str[i] == 'A' || str[i] == 'b' || str[i] == 'B' || str[i] == 'c' ||
-                    str[i] == 'C') {
+                    str[i] == 'C' || str[i] == '2') {
                     *pos = i + 1;
                     return true;
                 }
@@ -78,7 +82,7 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 
             case '3':
                 if (str[i] == 'd' || str[i] == 'D' || str[i] == 'e' || str[i] == 'E' || str[i] == 'f' ||
-                    str[i] == 'F') {
+                    str[i] == 'F' || str[i] == '3') {
                     *pos = i + 1;
                     return true;
                 }
@@ -86,7 +90,7 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 
             case '4':
                 if (str[i] == 'g' || str[i] == 'G' || str[i] == 'h' || str[i] == 'H' || str[i] == 'i' ||
-                    str[i] == 'I') {
+                    str[i] == 'I' || str[i] == '4') {
                     *pos = i + 1;
                     return true;
                 }
@@ -94,7 +98,7 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 
             case '5':
                 if (str[i] == 'j' || str[i] == 'J' || str[i] == 'k' || str[i] == 'K' || str[i] == 'l' ||
-                    str[i] == 'L') {
+                    str[i] == 'L' || str[i] == '5') {
                     *pos = i + 1;
                     return true;
                 }
@@ -102,7 +106,7 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 
             case '6':
                 if (str[i] == 'm' || str[i] == 'M' || str[i] == 'n' || str[i] == 'N' || str[i] == 'o' ||
-                    str[i] == 'O') {
+                    str[i] == 'O' || str[i] == '6') {
                     *pos = i;
                     return true;
                 }
@@ -110,7 +114,7 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 
             case '7':
                 if (str[i] == 'p' || str[i] == 'P' || str[i] == 'q' || str[i] == 'Q' || str[i] == 'r' ||
-                    str[i] == 'R' || str[i] == 's' || str[i] == 'S') {
+                    str[i] == 'R' || str[i] == 's' || str[i] == 'S' || str[i] == '7') {
                     *pos = i;
                     return true;
                 }
@@ -118,7 +122,7 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 
             case '8':
                 if (str[i] == 't' || str[i] == 'T' || str[i] == 'u' || str[i] == 'U' || str[i] == 'v' ||
-                    str[i] == 'V') {
+                    str[i] == 'V' || str[i] == '8') {
                     *pos = i;
                     return true;
                 }
@@ -126,14 +130,14 @@ bool isItThere(char str[MAX_LENGTH], char c, int *pos) {
 
             case '9':
                 if (str[i] == 'w' || str[i] == 'W' || str[i] == 'x' || str[i] == 'X' || str[i] == 'y' ||
-                    str[i] == 'Y' || str[i] == 'z' || str[i] == 'Z') {
+                    str[i] == 'Y' || str[i] == 'z' || str[i] == 'Z' || str[i] == '9') {
                     *pos = i;
                     return true;
                 }
                 break;
 
             case '0':
-                if (str[i] == '+') {
+                if (str[i] == '+' || str[i] == '0') {
                     *pos = i;
                     return true;
                 }
@@ -164,9 +168,20 @@ bool containsName(char str[MAX_LENGTH], char *nbr) {
     return true;
 }
 
-bool containsNumber(char *str, char *nbr) {
-    // Does it contain exact match
-    return strstr(str, nbr) != NULL;
+bool containsNumber(char str[MAX_LENGTH], char *nbr) {
+    // Define what position are we starting the search
+    int pos = 0;
+    // Get size of our string
+    int size = (int) strlen(nbr);
+    for (int i = 0; i < size; i++) {
+        // Checks if there's a char after our previous
+        if (!isItThere(str, nbr[i], &pos)) {
+            // If not, returns false
+            return false;
+        }
+    }
+    // Otherwise returns true
+    return true;
 }
 
 void checkArgument(char *arg) {
