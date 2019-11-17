@@ -5,6 +5,16 @@
 
 #define MAX_LENGTH 102  // Maximum length of characters, that program can handle
 
+/*
+ * Created by Sotirios Pupakis
+ * Created on 19.10.2019
+ * Last modified: 19.11.2019
+ * Project 1: Projekt 1 - Práce s textem
+ * Login: xpupak01
+ * Bonus: Yes
+ * Known bugs: None
+ */
+
 void printAll();    // Prints everything that get's into stdin
 void checkArgument(char *arg);  // Check if arguments that was provided isn't in unsupported format
 
