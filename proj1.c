@@ -8,7 +8,7 @@
 /*
  * Created by Sotirios Pupakis
  * Created on 19.10.2019
- * Last modified: 19.11.2019
+ * Last modified: 17.11.2019
  * Project 1: Projekt 1 - Práce s textem
  * Login: xpupak01
  * Bonus: Yes
@@ -49,17 +49,17 @@ int main(int argc, char *argv[]) {
                 }
             } else {
                 // Print a message when no number was found
-                printf("%s", "NO NUMBER FOUND");
+                printf("NO NUMBER FOUND\n");
             }
         }
         // Print something if nothing was found
         if (!found) {
             // If no contact found, prints all
-            printf("%s", "Not found");
+            printf("Not found");
         }
     } else {
         // Prints error when we have more arguments
-        fputs("UNKNOWN ARGUMENTS\n", stderr);
+        fputs("UNKNOWN ARGUMENTS", stderr);
     }
     printf("\n");
     return 0;
