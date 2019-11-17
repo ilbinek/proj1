@@ -55,13 +55,12 @@ int main(int argc, char *argv[]) {
         // Print something if nothing was found
         if (!found) {
             // If no contact found, prints all
-            printf("Not found");
+            printf("Not found\n");
         }
     } else {
         // Prints error when we have more arguments
-        fputs("UNKNOWN ARGUMENTS", stderr);
+        fputs("UNKNOWN ARGUMENTS\n", stderr);
     }
-    printf("\n");
     return 0;
 }
 
@@ -214,5 +213,4 @@ void printAll() {
     while (fgets(str, MAX_LENGTH, stdin) != NULL && fgets(nbr, MAX_LENGTH, stdin)) {
         printf("%.*s, %s", (int) strlen(str) - 1, str, nbr);
     }
-    printf("\n");
 }
